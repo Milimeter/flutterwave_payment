@@ -2,7 +2,7 @@ name: flutterwave_payment
 description: A new Flutter plugin for flutterwave payment integration
 version: 0.0.1
 author: Oladapo Abdulrazaq <razaqolad300@gmail.com>
-homepage:
+homepage: https://github.com/Milimeter/flutterwave_payment
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
