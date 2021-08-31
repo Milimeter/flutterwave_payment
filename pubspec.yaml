@@ -1,7 +1,6 @@
 name: flutterwave_payment
 description: A new Flutter plugin for flutterwave payment integration
-version: 0.0.1
-author: Oladapo Abdulrazaq <razaqolad300@gmail.com>
+version: 0.0.2
 homepage: https://github.com/Milimeter/flutterwave_payment
 
 environment:
@@ -11,11 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  # flutter_lints: ^1.0.0
   flutter_svg: ^0.22.0
   http: ^0.13.3
   intl: ^0.17.0
@@ -27,6 +21,12 @@ dev_dependencies:
   tripledes_nullsafety: ^1.0.1
   webview_flutter: ^2.0.12
   tripledes: ^2.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  # flutter_lints: ^1.0.0
+  
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

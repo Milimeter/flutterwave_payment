@@ -1,6 +1,9 @@
 # flutterwave_payment
 
 A new Flutter plugin for flutterwave payment integration
+This fluterwave_payment plugin is a fork from - [rave_flutter](https://pub.dev/packages/rave_flutter) plugin which is no longer being updated so flutterwave_payment is born to fix a lot of issues within it. 
+
+This is a stable version of the payment gateway with more functionalities still to come.
 
 
 
@@ -31,7 +34,7 @@ A robust Flutter plugin for accepting payment on Rave with
 
 
 ## Installation
-To use this plugin, add `rave_flutter` as a dependency in your pubspec.yaml file.
+To use this plugin, add `flutterwave_payment` as a dependency in your pubspec.yaml file.
 
 Webview is required so enable `PlatformView` on iOS by adding:
 

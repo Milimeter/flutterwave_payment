@@ -2,7 +2,7 @@
 # See https://dart.dev/tools/pub/glossary#lockfile
 packages:
   async:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: async
       url: "https://pub.dartlang.org"
@@ -44,14 +44,14 @@ packages:
     source: hosted
     version: "1.15.0"
   dio:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: dio
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
   equatable:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: equatable
       url: "https://pub.dartlang.org"
@@ -70,7 +70,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_svg:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: flutter_svg
       url: "https://pub.dartlang.org"
@@ -82,14 +82,14 @@ packages:
     source: sdk
     version: "0.0.0"
   get_it:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: get_it
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.2.0"
   http:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: http
       url: "https://pub.dartlang.org"
@@ -103,7 +103,7 @@ packages:
     source: hosted
     version: "4.0.0"
   intl:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: intl
       url: "https://pub.dartlang.org"
@@ -117,7 +117,7 @@ packages:
     source: hosted
     version: "0.12.10"
   meta:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: meta
       url: "https://pub.dartlang.org"
@@ -206,14 +206,14 @@ packages:
     source: hosted
     version: "0.3.0"
   tripledes:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: tripledes
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
   tripledes_nullsafety:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: tripledes_nullsafety
       url: "https://pub.dartlang.org"
@@ -234,7 +234,7 @@ packages:
     source: hosted
     version: "2.1.0"
   webview_flutter:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: webview_flutter
       url: "https://pub.dartlang.org"
