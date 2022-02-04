@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutterwave_payment/flutterwave_payment.dart';
 
 class AddVendorWidget extends StatefulWidget {
+  const AddVendorWidget({Key key}) : super(key: key);
+
   @override
   _AddVendorWidgetState createState() => _AddVendorWidgetState();
 }
@@ -27,13 +29,13 @@ class _AddVendorWidgetState extends State<AddVendorWidget> {
     return AlertDialog(
       content: Form(
         key: formKey,
-        autovalidate: autoValidate,
+        autovalidateMode: autoValidate? AutovalidateMode.always: AutovalidateMode.disabled,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             TextFormField(
               decoration:
-                  InputDecoration(hintText: 'Your Vendor\'s Rave Reference'),
+                  const InputDecoration(hintText: 'Your Vendor\'s Rave Reference'),
               onSaved: (value) => id = value,
               textCapitalization: TextCapitalization.words,
               focusNode: refFocusNode,
@@ -46,11 +48,11 @@ class _AddVendorWidgetState extends State<AddVendorWidget> {
               validator: (value) =>
                   value.trim().isEmpty ? 'Field is required' : null,
             ),
-            SizedBox(
+          const SizedBox(
               height: 30,
             ),
             TextFormField(
-              decoration: InputDecoration(hintText: 'Ratio for this vendor'),
+              decoration:const InputDecoration(hintText: 'Ratio for this vendor'),
               onSaved: (value) => ratio = value,
               keyboardType: TextInputType.number,
               focusNode: ratioFocusNode,
@@ -59,7 +61,7 @@ class _AddVendorWidgetState extends State<AddVendorWidget> {
                 ratioFocusNode.unfocus();
                 validateInputs();
               },
-              inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               validator: (value) =>
                   value.trim().isEmpty ? 'Field is required' : null,
             )
@@ -67,10 +69,10 @@ class _AddVendorWidgetState extends State<AddVendorWidget> {
         ),
       ),
       actions: <Widget>[
-        FlatButton(
+        OutlinedButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text('CANCEL')),
-        FlatButton(onPressed: validateInputs, child: Text('ADD')),
+            child:const Text('CANCEL')),
+        OutlinedButton(onPressed: validateInputs, child:const Text('ADD')),
       ],
     );
   }

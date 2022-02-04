@@ -6,24 +6,24 @@ import 'package:flutterwave_payment/src/ui/fields/base_field.dart';
 
 class CVVField extends BaseTextField {
   CVVField({
-    @required FormFieldSetter<String> onSaved,
-    FocusNode focusNode,
-    TextInputAction textInputAction,
-    ValueChanged<String> onFieldSubmitted,
+    required FormFieldSetter<String> onSaved,
+    FocusNode? focusNode,
+    TextInputAction? textInputAction,
+    ValueChanged<String>? onFieldSubmitted,
   }) : super(
           labelText: 'CVV',
           hintText: '123',
           onSaved: onSaved,
-          validator: (String value) => validateCVV(value),
+          validator: (String? value) => validateCVV(value),
           focusNode: focusNode,
           onFieldSubmitted: onFieldSubmitted,
           textInputAction: textInputAction,
           inputFormatters: [
-            WhitelistingTextInputFormatter.digitsOnly,
+            FilteringTextInputFormatter.digitsOnly,
             new LengthLimitingTextInputFormatter(4),
           ],
         );
 
-  static String validateCVV(String value) =>
+  static String? validateCVV(String? value) =>
       ValidatorUtils.isCVVValid(value) ? null : Strings.invalidCVV;
 }

@@ -1,27 +1,29 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutterwave_payment/flutterwave_payment.dart';
 
 import 'button_widget.dart';
 import 'switch_widget.dart';
 import 'vendor_widget.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.blue, accentColor: Colors.pink),
-      home: HomeWidget(),
+      theme: ThemeData(colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue).copyWith(secondary: Colors.pink)),
+      home: const HomeWidget(),
     );
   }
 }
 
 class HomeWidget extends StatefulWidget {
+  const HomeWidget({Key key}) : super(key: key);
+
   @override
   _HomeWidgetState createState() => _HomeWidgetState();
 }
@@ -133,63 +135,65 @@ class _HomeWidgetState extends State<HomeWidget> {
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Form(
                     key: formKey,
-                    autovalidate: autoValidate,
+                    autovalidateMode: autoValidate
+                        ? AutovalidateMode.always
+                        : AutovalidateMode.disabled,
                     child: Column(
                       children: <Widget>[
                         TextFormField(
-                          decoration: InputDecoration(hintText: 'Email'),
+                          decoration: const InputDecoration(hintText: 'Email'),
                           onSaved: (value) => email = value,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         TextFormField(
                           decoration:
-                              InputDecoration(hintText: 'Amount to charge'),
+                              const InputDecoration(hintText: 'Amount to charge'),
                           onSaved: (value) => amount = double.tryParse(value),
                           keyboardType: TextInputType.number,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         TextFormField(
-                          decoration: InputDecoration(hintText: 'txRef'),
+                          decoration: const InputDecoration(hintText: 'txRef'),
                           onSaved: (value) => txRef = value,
                           initialValue:
                               "rave_flutter-${DateTime.now().toString()}",
                           validator: (value) =>
                               value.trim().isEmpty ? 'Field is required' : null,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         TextFormField(
-                          decoration: InputDecoration(hintText: 'orderRef'),
+                          decoration: const InputDecoration(hintText: 'orderRef'),
                           onSaved: (value) => orderRef = value,
                           initialValue:
                               "rave_flutter-${DateTime.now().toString()}",
                           validator: (value) =>
                               value.trim().isEmpty ? 'Field is required' : null,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         TextFormField(
-                          decoration: InputDecoration(hintText: 'Narration'),
+                          decoration: const InputDecoration(hintText: 'Narration'),
                           onSaved: (value) => narration = value,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               hintText: 'Currency code e.g NGN'),
                           onSaved: (value) => currency = value,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         TextFormField(
                           decoration:
-                              InputDecoration(hintText: 'Country code e.g NG'),
+                              const InputDecoration(hintText: 'Country code e.g NG'),
                           onSaved: (value) => country = value,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         TextFormField(
-                          decoration: InputDecoration(hintText: 'First name'),
+                          decoration: const InputDecoration(hintText: 'First name'),
                           onSaved: (value) => firstName = value,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         TextFormField(
-                          decoration: InputDecoration(hintText: 'Last name'),
+                          decoration: const InputDecoration(hintText: 'Last name'),
                           onSaved: (value) => lastName = value,
                         ),
                       ],
@@ -207,14 +211,14 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   Widget buildVendorRefs() {
     if (!addSubAccounts) {
-      return SizedBox();
+      return const SizedBox();
     }
 
     addSubAccount() async {
       var subAccount = await showDialog<SubAccount>(
-          context: context, builder: (context) => AddVendorWidget());
+          context: context, builder: (context) => const AddVendorWidget());
       if (subAccount != null) {
-        if (subAccounts == null) subAccounts = [];
+        subAccounts ??= [];
         setState(() => subAccounts.add(subAccount));
       }
     }
@@ -224,7 +228,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         onPressed: addSubAccount,
         text: 'Add vendor',
       ),
-      SizedBox(
+      const SizedBox(
         width: 10,
         height: 10,
       ),

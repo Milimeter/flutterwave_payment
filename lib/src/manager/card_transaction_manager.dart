@@ -9,8 +9,8 @@ import 'package:flutterwave_payment/src/manager/base_transaction_manager.dart';
 
 class CardTransactionManager extends BaseTransactionManager {
   CardTransactionManager(
-      {@required BuildContext context,
-      @required TransactionComplete onTransactionComplete})
+      {required BuildContext context,
+      required TransactionComplete onTransactionComplete})
       : super(
           context: context,
           onTransactionComplete: onTransactionComplete,
@@ -21,7 +21,7 @@ class CardTransactionManager extends BaseTransactionManager {
     setConnectionState(ConnectionState.waiting);
     try {
       var response =
-          await service.charge(ChargeRequestBody.fromPayload(payload: payload));
+          await service!.charge(ChargeRequestBody.fromPayload(payload: payload!));
 
       setConnectionState(ConnectionState.done);
 
@@ -29,7 +29,7 @@ class CardTransactionManager extends BaseTransactionManager {
 
       var suggestedAuth = response.suggestedAuth?.toUpperCase();
       var authModelUsed = response.authModelUsed?.toUpperCase();
-      var message = response.message.toUpperCase();
+      var message = response.message!.toUpperCase();
       var chargeResponseCode = response.chargeResponseCode;
 
       if (message == RaveConstants.AUTH_SUGGESTION) {
@@ -71,7 +71,7 @@ class CardTransactionManager extends BaseTransactionManager {
 
       if (authModelUsed == RaveConstants.GTB_OTP ||
           authModelUsed == RaveConstants.ACCESS_OTP ||
-          authModelUsed.contains("OTP")) {
+          authModelUsed!.contains("OTP")) {
         onOtpRequested(response.chargeResponseMessage);
         return;
       }
@@ -88,25 +88,25 @@ class CardTransactionManager extends BaseTransactionManager {
       callback: (pin) {
         if (pin != null && pin.length == 4) {
           payload
-            ..pin = pin
-            ..suggestedAuth = RaveConstants.PIN;
+            ?.pin = pin
+            ?.suggestedAuth = RaveConstants.PIN;
           _handlePinOrBillingInput();
         } else {
           handleError(e: RaveException(data: "PIN must be exactly 4 digits"));
         }
       },
     );
-    transactionBloc.setState(
+    transactionBloc!.setState(
       state,
     );
   }
 
   _onBillingRequest() {
-    transactionBloc.setState(
+    transactionBloc!.setState(
       TransactionState(
           state: State.avsSecure,
           callback: (map) {
-            payload
+            payload!
               ..suggestedAuth = RaveConstants.NO_AUTH_INTERNATIONAL
               ..billingAddress = map["address"]
               ..billingCity = map["city"]
@@ -120,14 +120,14 @@ class CardTransactionManager extends BaseTransactionManager {
 
   _onNoAuthUsed() => reQueryTransaction();
 
-  _onAVSVBVSecureCodeModelUsed(String authUrl) => showWebAuthorization(authUrl);
+  _onAVSVBVSecureCodeModelUsed(String? authUrl) => showWebAuthorization(authUrl);
 
   _handlePinOrBillingInput() async {
     setConnectionState(ConnectionState.waiting);
 
     try {
       var response =
-          await service.charge(ChargeRequestBody.fromPayload(payload: payload));
+          await service!.charge(ChargeRequestBody.fromPayload(payload: payload!));
       setConnectionState(ConnectionState.done);
 
       flwRef = response.flwRef;

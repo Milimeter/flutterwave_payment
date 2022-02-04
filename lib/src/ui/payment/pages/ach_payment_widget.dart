@@ -3,7 +3,7 @@ import 'package:flutterwave_payment/src/manager/ach_transaction_manager.dart';
 import 'package:flutterwave_payment/src/ui/payment/pages/base_payment_page.dart';
 
 class AchPaymentWidget extends BasePaymentPage {
-  AchPaymentWidget({@required AchTransactionManager manager})
+  AchPaymentWidget({required AchTransactionManager manager})
       : super(transactionManager: manager);
 
   @override
@@ -29,5 +29,5 @@ class _AchPaymentWidgetState extends BasePaymentPageState<AchPaymentWidget> {
   bool showEmailField() => false;
 
   @override
-  FocusNode getNextFocusNode() => null;
+  FocusNode? getNextFocusNode() => null;
 }

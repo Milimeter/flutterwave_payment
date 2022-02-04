@@ -9,7 +9,7 @@ import 'package:flutterwave_payment/src/services/transaction_service.dart';
 GetIt getIt = GetIt.instance..allowReassignment = true;
 
 class Repository {
-  static Repository get instance => getIt<Repository>();
+  static Repository? get instance => getIt<Repository>();
   RavePayInitializer initializer;
 
   Repository._(this.initializer);

@@ -3,11 +3,11 @@ import 'package:flutterwave_payment/src/common/rave_utils.dart';
 import 'package:flutterwave_payment/src/dto/payload.dart';
 
 class FeeCheckRequestBody extends Equatable {
-  final String amount;
-  final String pBFPubKey;
-  final String card6;
-  final String currency;
-  final String pType;
+  final String? amount;
+  final String? pBFPubKey;
+  final String? card6;
+  final String? currency;
+  final String? pType;
 
   FeeCheckRequestBody({
     this.amount,
@@ -22,7 +22,7 @@ class FeeCheckRequestBody extends Equatable {
         this.pBFPubKey = p.pbfPubKey,
         this.currency = p.currency,
         this.pType = null,
-        this.card6 = isEmpty(p.cardNo) ? p.cardBIN : p.cardNo.substring(0, 6);
+        this.card6 = isEmpty(p.cardNo) ? p.cardBIN : p.cardNo!.substring(0, 6);
 
   Map<String, dynamic> toJson() {
     var json = {
@@ -40,7 +40,7 @@ class FeeCheckRequestBody extends Equatable {
   }
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         amount,
         pBFPubKey,
         pType,

@@ -3,21 +3,21 @@ import 'package:flutterwave_payment/src/common/rave_utils.dart';
 class SubAccount {
   final String id;
   final String transactionSplitRatio;
-  final String transactionChargeType;
-  final String transactionCharge;
+  final String? transactionChargeType;
+  final String? transactionCharge;
 
   SubAccount(this.id, this.transactionSplitRatio)
       : this.transactionChargeType = null,
         this.transactionCharge = null;
 
-  Map<String, String> toJson() {
+  Map<String, String?> toJson() {
     var map = {_idKey: id, _ratioKey: transactionSplitRatio};
     if (!isEmpty(transactionChargeType)) {
-      map[_chargeTypeKey] = transactionChargeType;
+      map[_chargeTypeKey] = transactionChargeType!;
     }
 
     if (!isEmpty(transactionCharge)) {
-      map[_chargeKey] = transactionCharge;
+      map[_chargeKey] = transactionCharge!;
     }
     return map;
   }

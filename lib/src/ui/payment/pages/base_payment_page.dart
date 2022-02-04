@@ -13,25 +13,25 @@ import 'package:flutterwave_payment/src/ui/fields/email_field.dart';
 abstract class BasePaymentPage extends StatefulWidget {
   final BaseTransactionManager transactionManager;
 
-  BasePaymentPage({@required this.transactionManager});
+  BasePaymentPage({required this.transactionManager});
 }
 
 abstract class BasePaymentPageState<T extends BasePaymentPage> extends State<T>
     with TickerProviderStateMixin {
   var formKey = GlobalKey<FormState>();
-  final initializer = Repository.instance.initializer;
+  final initializer = Repository.instance!.initializer;
   final _connectionBloc = ConnectionBloc.instance;
-  TextEditingController _amountController;
-  TextEditingController _emailController;
-  AnimationController _animationController;
-  AnimationController _infoAnimationController;
-  Animation _infoAnimation;
+  TextEditingController? _amountController;
+  TextEditingController? _emailController;
+  late AnimationController _animationController;
+  AnimationController? _infoAnimationController;
+  late Animation _infoAnimation;
   var _emailFocusNode = FocusNode();
   var _amountFocusNode = FocusNode();
-  Animation _animation;
+  late Animation _animation;
   var _slideInTween = Tween<Offset>(begin: Offset(0, -0.5), end: Offset.zero);
   bool _autoValidate = false;
-  Payload payload;
+  Payload? payload;
 
   bool _cameWithValidAmount = true;
   bool _cameWithValidEmail = true;
@@ -43,13 +43,13 @@ abstract class BasePaymentPageState<T extends BasePaymentPage> extends State<T>
     if (!ValidatorUtils.isAmountValid(initializer.amount.toString())) {
       _cameWithValidAmount = false;
       _amountController = TextEditingController();
-      _amountController.addListener(_updateAmount);
+      _amountController!.addListener(_updateAmount);
     }
 
     if (!ValidatorUtils.isEmailValid(initializer.email)) {
       _cameWithValidEmail = false;
       _emailController = TextEditingController();
-      _emailController.addListener(_updateEmail);
+      _emailController!.addListener(_updateEmail);
     }
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 500));
@@ -62,8 +62,8 @@ abstract class BasePaymentPageState<T extends BasePaymentPage> extends State<T>
       _infoAnimationController = AnimationController(
           vsync: this, duration: Duration(milliseconds: 400));
       _infoAnimation =
-          Tween<double>(begin: 1.0, end: 1.2).animate(_infoAnimationController);
-      _infoAnimationController.addStatusListener(_onInfoAnimationChange);
+          Tween<double>(begin: 1.0, end: 1.2).animate(_infoAnimationController!);
+      _infoAnimationController!.addStatusListener(_onInfoAnimationChange);
     }
     super.initState();
   }
@@ -83,9 +83,9 @@ abstract class BasePaymentPageState<T extends BasePaymentPage> extends State<T>
   Widget build(BuildContext context) {
     var child = buildWidget(context);
     return FadeTransition(
-      opacity: _animation,
+      opacity: _animation as Animation<double>,
       child: SlideTransition(
-        position: _slideInTween.animate(_animation),
+        position: _slideInTween.animate(_animation as Animation<double>),
         child: SingleChildScrollView(
           child: DecoratedBox(
             decoration:
@@ -93,7 +93,7 @@ abstract class BasePaymentPageState<T extends BasePaymentPage> extends State<T>
             child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 child: StreamBuilder<ConnectionState>(
-                  stream: ConnectionBloc.instance.stream,
+                  stream: ConnectionBloc.instance!.stream,
                   builder: (context, snapshot) {
                     return snapshot.hasData &&
                             snapshot.data == ConnectionState.waiting
@@ -120,7 +120,7 @@ abstract class BasePaymentPageState<T extends BasePaymentPage> extends State<T>
                   showEmailField() ? _emailFocusNode : getNextFocusNode()),
               currency: initializer.currency,
               controller: _amountController,
-              onSaved: (value) => payload.amount = value,
+              onSaved: (value) => payload!.amount = value,
             ),
       _cameWithValidEmail || !showEmailField()
           ? SizedBox()
@@ -130,7 +130,7 @@ abstract class BasePaymentPageState<T extends BasePaymentPage> extends State<T>
               onFieldSubmitted: (value) =>
                   swapFocus(_emailFocusNode, getNextFocusNode()),
               controller: _emailController,
-              onSaved: (value) => payload.email = value)
+              onSaved: (value) => payload!.email = value)
     ];
 
     var payButton = Container(
@@ -145,7 +145,7 @@ abstract class BasePaymentPageState<T extends BasePaymentPage> extends State<T>
             Expanded(
               child: Align(
                 child: Text(
-                  getPaymentText(),
+                  getPaymentText()!,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -167,7 +167,7 @@ abstract class BasePaymentPageState<T extends BasePaymentPage> extends State<T>
         : Padding(
             padding: EdgeInsets.only(top: 15),
             child: ScaleTransition(
-              scale: _infoAnimation,
+              scale: _infoAnimation as Animation<double>,
               child: Text(
                 "This payment mode is currently under development",
                 textAlign: TextAlign.center,
@@ -180,7 +180,7 @@ abstract class BasePaymentPageState<T extends BasePaymentPage> extends State<T>
 
     return Form(
       key: formKey,
-      autovalidate: _autoValidate,
+      autovalidateMode: _autoValidate? AutovalidateMode.always: AutovalidateMode.disabled,
       child: Column(
         children: amountAndEmailFields
           ..insert(0, topWidget)
@@ -193,7 +193,7 @@ abstract class BasePaymentPageState<T extends BasePaymentPage> extends State<T>
 
   Widget buildHeader() {
     var emailText = Text(
-      initializer.email,
+      initializer.email!,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
@@ -236,7 +236,7 @@ abstract class BasePaymentPageState<T extends BasePaymentPage> extends State<T>
     );
   }
 
-  swapFocus(FocusNode oldFocus, [FocusNode newFocus]) {
+  swapFocus(FocusNode oldFocus, [FocusNode? newFocus]) {
     oldFocus.unfocus();
     if (newFocus != null) {
       FocusScope.of(context).requestFocus(newFocus);
@@ -250,12 +250,12 @@ abstract class BasePaymentPageState<T extends BasePaymentPage> extends State<T>
 
   List<Widget> buildLocalFields([data]);
 
-  String getPaymentText() {
+  String? getPaymentText() {
     if (initializer.payButtonText != null &&
-        initializer.payButtonText.isNotEmpty) {
+        initializer.payButtonText!.isNotEmpty) {
       return initializer.payButtonText;
     }
-    if (initializer.amount == null || initializer.amount.isNegative) {
+    if (initializer.amount == null || initializer.amount!.isNegative) {
       return Strings.pay;
     }
 
@@ -263,7 +263,7 @@ abstract class BasePaymentPageState<T extends BasePaymentPage> extends State<T>
   }
 
   _validateInputs() {
-    var formState = formKey.currentState;
+    var formState = formKey.currentState!;
     if (!formState.validate()) {
       setState(() => _autoValidate = true);
       return;
@@ -284,10 +284,10 @@ abstract class BasePaymentPageState<T extends BasePaymentPage> extends State<T>
   }
 
   void _updateAmount() => setState(
-      () => initializer.amount = double.tryParse(_amountController.text));
+      () => initializer.amount = double.tryParse(_amountController!.text));
 
   void _updateEmail() =>
-      setState(() => initializer.email = _emailController.text);
+      setState(() => initializer.email = _emailController!.text);
 
   Widget buildWidget(BuildContext context) => Column(
         children: <Widget>[
@@ -296,7 +296,7 @@ abstract class BasePaymentPageState<T extends BasePaymentPage> extends State<T>
         ],
       );
 
-  FocusNode getNextFocusNode();
+  FocusNode? getNextFocusNode();
 
   Widget buildTopWidget() => SizedBox();
 
@@ -304,21 +304,21 @@ abstract class BasePaymentPageState<T extends BasePaymentPage> extends State<T>
 
   bool get supported => true;
 
-  setDataState(ConnectionState state) => _connectionBloc.setState(state);
+  setDataState(ConnectionState state) => _connectionBloc!.setState(state);
 
   _blinkInfoWidget() {
-    if (_infoAnimationController.isAnimating) return;
-    _infoAnimationController.forward();
+    if (_infoAnimationController!.isAnimating) return;
+    _infoAnimationController!.forward();
   }
 
   _onInfoAnimationChange(AnimationStatus status) {
     if (status == AnimationStatus.completed) {
-      _infoAnimationController.reverse();
+      _infoAnimationController!.reverse();
     } else if (status == AnimationStatus.dismissed) {
       if (_infoAnimationRepetition >= 1) {
         _infoAnimationRepetition = 0;
       } else {
-        _infoAnimationController.forward();
+        _infoAnimationController!.forward();
         _infoAnimationRepetition++;
       }
     }

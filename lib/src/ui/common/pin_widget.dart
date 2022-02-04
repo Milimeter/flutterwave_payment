@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutterwave_payment/src/ui/fields/base_field.dart';
 
 class PinWidget extends StatefulWidget {
-  final ValueChanged<String> onPinInputted;
+  final ValueChanged<String>? onPinInputted;
 
-  PinWidget({@required this.onPinInputted});
+  PinWidget({required this.onPinInputted});
 
   @override
   _PinWidgetState createState() => _PinWidgetState();
@@ -61,7 +61,7 @@ class _PinWidgetState extends State<PinWidget> {
               ),
               autoFocus: true,
               inputFormatters: [
-                WhitelistingTextInputFormatter.digitsOnly,
+                FilteringTextInputFormatter.digitsOnly,
                 LengthLimitingTextInputFormatter(4),
               ],
               obscureText: true,
@@ -79,7 +79,7 @@ class _PinWidgetState extends State<PinWidget> {
     var value = _controller.text;
     if (value.length == 4) {
       FocusScope.of(context).unfocus();
-      widget.onPinInputted(value);
+      widget.onPinInputted!(value);
       _controller.removeListener(_onChange);
     }
   }

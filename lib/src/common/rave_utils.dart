@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:meta/meta.dart';
-import 'package:tripledes/tripledes.dart';
+import 'package:tripledes_nullsafety/tripledes_nullsafety.dart';
 
-bool isEmpty(String string) {
+bool isEmpty(String? string) {
   return string == null || string.trim().isEmpty;
 }
 
-String formatAmount(num amount) {
+String formatAmount(num? amount) {
   return new NumberFormat.currency(name: '').format(amount);
 }
 
@@ -27,12 +26,12 @@ bool get isInDebugMode {
   return inDebugMode;
 }
 
-putIfNotNull({@required Map map, @required key, @required value}) {
+putIfNotNull({required Map map, required key, required value}) {
   if (value == null || (value is String && value.isEmpty)) return;
   map[key] = value;
 }
 
-putIfTrue({@required Map map, @required key, @required bool value}) {
+putIfTrue({required Map map, required key, required bool value}) {
   if (value == null || !value) return;
   map[key] = value;
 }
@@ -40,6 +39,6 @@ putIfTrue({@required Map map, @required key, @required bool value}) {
 printWrapped(Object text) {
   final pattern = new RegExp('.{1,800}'); // 800 is the size of each chunk
   pattern
-      .allMatches(text?.toString())
+      .allMatches(text.toString())
       .forEach((match) => debugPrint(match.group(0)));
 }

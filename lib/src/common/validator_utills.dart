@@ -4,7 +4,7 @@ import 'package:flutterwave_payment/src/common/strings.dart';
 import 'package:flutterwave_payment/src/ui/common/card_utils.dart';
 
 class ValidatorUtils {
-  static bool isCVVValid(String value) {
+  static bool isCVVValid(String? value) {
     if (value == null || value.trim().isEmpty) return false;
 
     var cvcValue = value.trim();
@@ -12,7 +12,7 @@ class ValidatorUtils {
     return !(!isWholeNumberPositive(cvcValue) || !validLength);
   }
 
-  static bool isCardNumberValid(String value) {
+  static bool isCardNumberValid(String? value) {
     if (value == null || value.trim().isEmpty) return false;
 
     var number = CardUtils.getCleanedNumber(value.trim());
@@ -21,30 +21,30 @@ class ValidatorUtils {
     return isWholeNumberPositive(number) && _isValidLuhnNumber(number);
   }
 
-  static bool isAmountValid(String value) {
+  static bool isAmountValid(String? value) {
     if (value == null || value.trim().isEmpty) return false;
-    double number = double.tryParse(value.trim());
+    double? number = double.tryParse(value.trim());
     return number != null && !number.isNegative && number > 0;
   }
 
-  static bool isPhoneValid(String value) {
+  static bool isPhoneValid(String? value) {
     if (value == null || value.trim().isEmpty) return false;
 
     // We are assuming no phone number is less than 3 characters
     return value.trim().length > 3;
   }
 
-  static bool isAccountValid(String value) {
+  static bool isAccountValid(String? value) {
     if (value == null || value.trim().isEmpty) return false;
     return value.trim().length == 10;
   }
 
-  static bool isBVNValid(String value) {
+  static bool isBVNValid(String? value) {
     if (value == null || value.trim().isEmpty) return false;
     return value.trim().length == 11;
   }
 
-  static bool isEmailValid(String value) {
+  static bool isEmailValid(String? value) {
     if (value == null || value.trim().isEmpty) return false;
     String p =
         '[a-zA-Z0-9\+\.\_\%\-\+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})';
@@ -74,7 +74,7 @@ class ValidatorUtils {
 
   /// Checks if the card has expired.
   /// Returns true if the card has expired; false otherwise
-  static bool validExpiryDate(int expiryMonth, int expiryYear) {
+  static bool validExpiryDate(int? expiryMonth, int? expiryYear) {
     return !(expiryMonth == null || expiryYear == null) &&
         isNotExpired(expiryYear, expiryMonth);
   }
@@ -137,7 +137,7 @@ class ValidatorUtils {
 
   /// Validates that required the variables of [RavePayInitializer]
   /// are not null, negative or  empty
-  static String validateInitializer(RavePayInitializer init) {
+  static String? validateInitializer(RavePayInitializer init) {
     if (isEmpty(init.publicKey))
       return Strings.cannotBeNullOrEmpty('publicKey');
     if (isEmpty(init.encryptionKey) == null)

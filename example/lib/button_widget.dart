@@ -8,20 +8,20 @@ class Button extends StatelessWidget {
   final Widget childText;
   final VoidCallback onPressed;
 
-  Button({@required this.onPressed, this.text, this.childText})
-      : assert(childText != null || text != null);
+   const Button({Key key, @required this.onPressed, this.text, this.childText})
+      : assert(childText != null || text != null), super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Platform.isIOS
         ? CupertinoButton.filled(
-            child: childText == null ? Text(text) : childText,
+            child: childText ?? Text(text),
             pressedOpacity: 0.5,
             onPressed: onPressed,
           )
-        : RaisedButton(
+        : ElevatedButton(
             onPressed: onPressed,
-            child: childText == null ? Text(text.toUpperCase()) : childText,
+            child: childText ?? Text(text.toUpperCase()),
           );
   }
 }

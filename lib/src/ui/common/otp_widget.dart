@@ -4,10 +4,10 @@ import 'package:flutterwave_payment/src/common/my_colors.dart';
 import 'package:flutterwave_payment/src/ui/fields/base_field.dart';
 
 class OtpWidget extends StatefulWidget {
-  final String message;
-  final ValueChanged<String> onPinInputted;
+  final String? message;
+  final ValueChanged<String?>? onPinInputted;
 
-  OtpWidget({@required this.message, @required this.onPinInputted});
+  OtpWidget({required this.message, required this.onPinInputted});
 
   @override
   _OtpWidgetState createState() => _OtpWidgetState();
@@ -16,7 +16,7 @@ class OtpWidget extends StatefulWidget {
 class _OtpWidgetState extends State<OtpWidget> {
   var _formKey = GlobalKey<FormState>();
   var _autoValidate = false;
-  String _otp;
+  String? _otp;
   var heightBox = SizedBox(height: 20.0);
 
   @override
@@ -25,7 +25,7 @@ class _OtpWidgetState extends State<OtpWidget> {
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       child: Form(
         key: _formKey,
-        autovalidate: _autoValidate,
+       // autovalidate: _autoValidate,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,7 +52,7 @@ class _OtpWidgetState extends State<OtpWidget> {
               ),
               autoFocus: true,
               inputFormatters: [
-                WhitelistingTextInputFormatter.digitsOnly,
+                FilteringTextInputFormatter.digitsOnly,
               ],
               obscureText: true,
               hintText: "OTP",
@@ -87,11 +87,11 @@ class _OtpWidgetState extends State<OtpWidget> {
   }
 
   void _validateInputs() {
-    final FormState form = _formKey.currentState;
+    final FormState form = _formKey.currentState!;
     if (form.validate()) {
       FocusScope.of(context).requestFocus(FocusNode());
       form.save();
-      widget.onPinInputted(_otp);
+      widget.onPinInputted!(_otp);
     } else {
       setState(() {
         _autoValidate = true;
