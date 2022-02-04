@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutterwave_payment/src/common/my_colors.dart';
 import 'package:flutterwave_payment/src/common/rave_pay_initializer.dart';
@@ -66,7 +65,7 @@ class RavePayManager {
     );
 
     // Return a cancelled response if result is null
-    return result == null ? RaveResult(status: RaveStatus.cancelled) : result as FutureOr<RaveResult>;
+    return result == null ? RaveResult(status: RaveStatus.cancelled) : result as FutureOr<RaveResult>; //FutureOr<RaveResult>
   }
 
   ThemeData _getDefaultTheme(BuildContext context) {
