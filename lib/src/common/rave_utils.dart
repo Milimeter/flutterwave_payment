@@ -1,6 +1,8 @@
+import 'dart:convert';
+
+import 'package:dart_des/dart_des.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:tripledes_nullsafety/tripledes_nullsafety.dart';
 
 bool isEmpty(String? string) {
   return string == null || string.trim().isEmpty;
@@ -11,8 +13,14 @@ String formatAmount(num? amount) {
 }
 
 String getEncryptedData(String str, String key) {
-  var blockCipher = BlockCipher(TripleDESEngine(), key);
-  return blockCipher.encodeB64(str);
+  
+  // var blockCipher = BlockCipher(TripleDESEngine(), key);
+  // return blockCipher.encodeB64(str);
+  List<int> encrypted;
+  DES desECB = DES(key: key.codeUnits, mode: DESMode.ECB);
+  encrypted = desECB.encrypt(str.codeUnits);
+  print('encrypted (base64): ${base64.encode(encrypted)}');
+  return base64.encode(encrypted);
 }
 
 /// Remove all line feed, carriage return and whitespace characters

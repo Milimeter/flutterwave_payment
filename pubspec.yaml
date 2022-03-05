@@ -1,6 +1,6 @@
 name: flutterwave_payment
 description: A new Flutter plugin for flutterwave payment integration
-version: 0.0.3+2
+version: 0.0.4
 homepage: https://github.com/Milimeter/flutterwave_payment
 
 environment:
@@ -9,6 +9,7 @@ environment:
 
 dependencies:
   async: ^2.6.1
+  dart_des: ^1.0.0
   dio: ^4.0.0
   equatable: ^2.0.3
   flutter:
